@@ -1,0 +1,54 @@
+#include <iostream>
+#include <fstream>
+#include <algorithm>
+using namespace std;
+int main() {
+	int N, Q, maincounter = 0, temp, item;
+	ifstream fin("gratis.in");
+	ofstream fout("gratis.out");
+	if (fin.is_open()) {
+		fin >> N >> Q;
+		if ((N < 1) || (N > 100000)) return 1;
+		if ((Q < 1) || (Q > 10000)) return 1;
+		int *array = new int[N];
+		for (int i = 0; i < N; i++) {
+			fin >> array[i];
+			if (array[i] > Q) return 1;
+		}
+		sort(array, array + N);
+		int i = N - 1, j = 0;
+			while (i >= j)
+			{
+				if (i == j)
+				{
+					maincounter++;
+					break;
+				}
+				for (int k = i; k > j; k++)
+				{
+					if (array[k] + array[j] <= Q)
+					{
+						maincounter++;
+						i--;
+						j++;
+						break;
+					}
+					else
+					{
+						maincounter++;
+						i--;
+						break;
+					}
+				}
+			}
+		if (fout.is_open()) {
+			fout << maincounter;
+			fout.close();
+		}
+		else return 1;
+		delete[] array;
+	}
+	else return 1;
+	fin.close();
+	return 0;
+}
