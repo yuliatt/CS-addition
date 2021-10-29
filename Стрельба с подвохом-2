@@ -1,0 +1,50 @@
+#include <iostream>
+#include <vector>
+#include <fstream>
+using namespace std;
+void sorting(vector<int> &win, vector<int> &lose, int &N) {
+	for (int j = 0; j < N; j++)
+		for (int i = 0; i < (N - j) - 1; i++)
+			if (win[i] + lose[i] > win[i + 1] + lose[i + 1]) {
+				int frstTMP = win[i], scndTMP = lose[i];
+				win[i] = win[i + 1];
+				lose[i] = lose[i + 1];
+				win[i + 1] = frstTMP;
+				lose[i + 1] = scndTMP;
+			}
+}
+int main() {
+	int N, K, result = 0;
+	ifstream fin("shooting.in");
+	ofstream fout("shooting.out");
+	if (fin.is_open()) {
+		fin >> N >> K;
+		vector<int> win;
+		vector<int> lose;
+		int frstPrice, scndPrice;
+		for (int i = 0; i < N; i++) {
+			fin >> frstPrice >> scndPrice;
+			win.push_back(frstPrice);
+			lose.push_back(scndPrice);
+		}
+		sorting(win, lose, N);
+		int counter = 0;
+			while (K > 0) {
+				result -= lose[counter];
+				++counter;
+				--K;
+			}
+			while (N > counter) {
+				result += win[counter];
+				++counter;
+			}
+		if (fout.is_open()) {
+			fout << result;
+			fout.close();
+		}
+		else return 1;
+	}
+	else return 1;
+	fin.close();
+	return 0;
+}
