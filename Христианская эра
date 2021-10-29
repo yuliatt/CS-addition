@@ -1,0 +1,23 @@
+#include <iostream>
+#include <algorithm>
+#include <string>
+#include <sstream>
+#include <vector>
+using namespace std;
+int main() {
+    string firstDate, secondDate, sInsert("-");
+    cin >> firstDate;
+    cin >> secondDate;
+    if ((count(firstDate.begin(), firstDate.end(), 'C')) != 0) firstDate.insert(0, sInsert);
+    firstDate.erase(remove_if(firstDate.begin(), firstDate.end(), ::isalpha), firstDate.end());
+    if ((count(secondDate.begin(), secondDate.end(), 'C')) != 0) secondDate.insert(0, sInsert);
+    secondDate.erase(remove_if(secondDate.begin(), secondDate.end(), ::isalpha), secondDate.end());
+    int x = stoi(firstDate);
+    int y = stoi(secondDate);
+    if (x == y) cout << 0;
+    else if (x < 0 && y > 0) cout << y - x - 1;
+    else if (y < 0 && x > 0) cout << y - x + 1;
+    else cout << y - x;
+    return 0;
+}
+ 
