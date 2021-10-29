@@ -1,0 +1,52 @@
+#pragma warning(disable : 4996)
+#include<iostream>
+#include <cstdio>
+#include <string.h>
+#include <string>
+#include <fstream>
+using namespace std;
+int main() {
+	setlocale(LC_ALL, ".1251");
+	ifstream in("input.txt");
+	ofstream out("output.txt");
+	if (!in) {
+		out.close();
+		return 0;
+	}
+	long long first = 0, second = 0;
+	if (in.eof()) {
+		in.close();
+		out.close();
+		return 0;
+	}
+	in >> first;
+	in >> second;
+	string s;
+	getline(in, s);
+	getline(in, s);
+	long long size = s.size();
+	if ((first < 1) || (first > second) || (second > size)) {
+		in.close();
+		out.close();
+		return 0;
+	}
+	if (size > 30000) {
+		in.close();
+		out.close();
+		return 0;
+	}
+	char* str = new char[size + 1];
+	strcpy(str, s.c_str());
+	long long counter = 0;
+	while (first + counter < second - counter) {
+		long long temp = str[first - 1 + counter];
+		str[first - 1 + counter] = str[second - 1 - counter];
+		str[second - 1 - counter] = temp;
+		counter++;
+	}
+	out << str;
+	delete[] str;
+	in.close();
+	out.close();
+	return 0;
+}
