@@ -1,0 +1,19 @@
+#include <iostream>
+using namespace std;
+int main() {
+	int Q1, P1, Q2, P2, A, firstTrack, secondTrack = 0, minimalPrice, result = 0;
+	cin >> Q1 >> P1 >> Q2 >> P2 >> A;
+	firstTrack = A / Q1;
+	if (A % Q1 != 0) ++firstTrack;
+	minimalPrice = firstTrack * P1;
+	while (firstTrack >= 0) {
+		result = firstTrack * P1 + secondTrack * P2;
+		if (minimalPrice > result) minimalPrice = result;
+		--firstTrack;
+		secondTrack = (A - firstTrack * Q1) / Q2;
+		if ((A - firstTrack * Q1) % Q2 != 0) ++secondTrack;
+	}
+	cout << minimalPrice;
+	system("pause");
+	return 0;
+}
